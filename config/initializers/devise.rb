@@ -1,5 +1,5 @@
-require '../../lib/spree_social'
-require '../../app/models/spree/authentication_method'
+require_relative '../../lib/spree_social'
+require_relative '../../app/models/spree/authentication_method'
 
 SpreeSocial::OAUTH_PROVIDERS.each do |provider|
   SpreeSocial.init_provider(provider[1])
