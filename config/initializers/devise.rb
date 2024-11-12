@@ -1,4 +1,4 @@
-require '../../app/models/application_record'
+require 'app/models/application_record'
 require '../../lib/spree_social'
 require '../../app/models/spree/authentication_method'
 
