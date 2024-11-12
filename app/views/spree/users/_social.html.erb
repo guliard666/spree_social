@@ -1,0 +1,39 @@
+<% if Spree::AuthenticationMethod.active_authentication_methods? %>
+  <% @body_id = 'login' %>
+  <div id="existing-customer">
+    <% if spree_current_user.user_authentications %>
+      <% unless spree_current_user.user_authentications.empty? %>
+        <h4><%= Spree.t(:you_have_signed_in_with_these_services) %></h4>
+        <div class="authentications">
+          <% for user_authentication in spree_current_user.user_authentications %>
+            <div class="authentication row">
+              <div class="provider col-5 col-lg-2">
+                <%= content_tag(:i, '', class: "icon-spree-#{user_authentication.provider.to_url}-circled") %>
+                <%= user_authentication.provider %>
+              </div>
+              <div class="uid col-5 col-lg-3">
+                <%= user_authentication.uid %>
+              </div>
+              <div class="col-2 text-center">
+                <%= link_to user_authentication, data:
+                  { confirm:
+                    "#{Spree.t(:remove_authentication_option_confirmation)}"
+                  }, method: :delete, class: 'btn btn-primary' do %>
+                  <%#= content_tag(:span, '', class: 'glyphicon glyphicon-minus-sign') %>
+                  <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 0 13 2" width="16px" class="spree-icon mt-1 float-right arrow plp-filters-card-header-arrow--minus"><path d="m0 1h13" fill="none" stroke="#232323" stroke-width="2"></path></svg>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+    <% if Spree::AuthenticationMethod.available_for(spree_current_user).exists?  %>
+      <p>
+        <strong><%= Spree.t(:add_another_service) %></strong>
+      </p>
+      <%= render 'spree/shared/social' %>
+    <% end %>
+  </div>
+  <div class="clear"></div>
+<% end %>
