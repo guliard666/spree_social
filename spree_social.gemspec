@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'omniauth-google-oauth2'
   s.add_runtime_dependency 'omniauth-amazon'
   s.add_runtime_dependency 'deface', '~> 1.0'
+  s.add_runtime_dependency 'multi_json'
 
   s.add_development_dependency 'spree_dev_tools'
 end
