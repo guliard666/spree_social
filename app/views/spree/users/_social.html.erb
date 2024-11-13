@@ -18,9 +18,8 @@
                 <%= link_to user_authentication, data:
                   { confirm:
                     "#{Spree.t(:remove_authentication_option_confirmation)}"
-                  }, method: :delete, class: 'btn btn-primary' do %>
-                  <%#= content_tag(:span, '', class: 'glyphicon glyphicon-minus-sign') %>
-                  <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 0 13 2" width="16px" class="spree-icon mt-1 float-right arrow plp-filters-card-header-arrow--minus"><path d="m0 1h13" fill="none" stroke="#232323" stroke-width="2"></path></svg>
+                  }, method: :delete, class: 'btn btn-primary btn-sm' do %>
+                  <%= content_tag(:i, '', class: 'bi bi-trash') %>
                 <% end %>
               </div>
             </div>
