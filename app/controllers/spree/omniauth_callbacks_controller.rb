@@ -24,6 +24,11 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
             sign_in_and_redirect :spree_user, authentication.user
           elsif spree_current_user
             spree_current_user.apply_omniauth(auth_hash)
+            if auth_hash && auth_hash['info']['name'].present?
+              name_arr = auth_hash['info']['name'].to_s.split(" ")
+              spree_current_user.first_name = name_arr[0] if spree_current_user.first_name.nil?
+              spree_current_user.last_name = name_arr[1] if spree_current_user.last_name.nil?
+            end
             if spree_current_user.confirmed_at.nil?
               spree_current_user.confirmation_sent_at = Time.now
               spree_current_user.confirmed_at = Time.now
@@ -35,6 +40,11 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
           else
             user = Spree::User.find_by_email(auth_hash['info']['email']) || Spree::User.new
             user.apply_omniauth(auth_hash)
+            if auth_hash && auth_hash['info']['name'].present?
+              name_arr = auth_hash['info']['name'].to_s.split(" ")
+              user.first_name = name_arr[0] if user.first_name.nil?
+              user.last_name = name_arr[1] if user.last_name.nil?
+            end
             if user.confirmed_at.nil?
               user.confirmation_sent_at = Time.now
               user.confirmed_at = Time.now
