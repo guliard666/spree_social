@@ -24,17 +24,22 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
             sign_in_and_redirect :spree_user, authentication.user
           elsif spree_current_user
             spree_current_user.apply_omniauth(auth_hash)
+            if spree_current_user.confirmed_at.nil?
+              spree_current_user.confirmation_sent_at = Time.now
+              spree_current_user.confirmed_at = Time.now
+              spree_current_user.confirmation_token = Devise.friendly_token
+            end
             spree_current_user.save!
             flash[:notice] = I18n.t('devise.sessions.signed_in')
             redirect_back_or_default(account_url)
           else
             user = Spree::User.find_by_email(auth_hash['info']['email']) || Spree::User.new
-            unless user.persisted?
+            user.apply_omniauth(auth_hash)
+            if user.confirmed_at.nil?
               user.confirmation_sent_at = Time.now
               user.confirmed_at = Time.now
               user.confirmation_token = Devise.friendly_token
             end
-            user.apply_omniauth(auth_hash)
             if user.save
               flash[:notice] = I18n.t('devise.omniauth_callbacks.success', kind: auth_hash['provider'])
               sign_in_and_redirect :spree_user, user
