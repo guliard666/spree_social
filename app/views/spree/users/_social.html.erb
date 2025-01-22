@@ -8,10 +8,11 @@
           <% for user_authentication in spree_current_user.user_authentications %>
             <div class="authentication row">
               <div class="provider col-5 col-lg-2">
-                <%= content_tag(:i, '', class: "icon-spree-#{user_authentication.provider.to_url}-circled") %>
-                <%= user_authentication.provider %>
+                <% provider_name = user_authentication.provider.to_s.split('_').first %>
+                <%= content_tag(:i, '', class: "icon-spree- bi bi-#{provider_name}") %>
+                <%= provider_name.titleize %>
               </div>
-              <div class="uid col-5 col-lg-3">
+              <div class="uid col-5 col-lg-3 pt-2">
                 <%= user_authentication.uid %>
               </div>
               <div class="col-2 text-center">
