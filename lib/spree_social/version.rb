@@ -10,7 +10,7 @@ module SpreeSocial
   module VERSION
     MAJOR = 3
     MINOR = 3
-    TINY  = 8
+    TINY  = 9
 
     STRING = [MAJOR, MINOR, TINY].compact.join('.')
   end
